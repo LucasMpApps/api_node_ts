@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db_1 = require("./infra/db");
 const newsController_1 = require("./controller/newsController");
+const auth_1 = require("./infra/auth");
 class StartUp {
     constructor() {
         this.app = express();
@@ -29,6 +30,7 @@ class StartUp {
         this.app.route('/').get((req, res) => {
             res.send({ versao: '0.0.1' });
         });
+        this.app.use(auth_1.default.validate);
         // News
         this.app.route("/api/v1/news").get(newsController_1.default.get);
         this.app.route("/api/v1/news/:id").get(newsController_1.default.getById);
